@@ -140,4 +140,37 @@ public class StudentDaoImpl implements IStudentDao{
 			DBUtil.closeAll(rs, pstmt, DBUtil.connection);
 		}
 	}
+
+	//查询学生总数
+	@Override
+	public int getTotalCount() {
+		String sql = "SELECT COUNT(1) FROM student";
+		return DBUtil.getTotalCount(sql);
+	}
+
+	@Override
+	public List<Student> queryStudentByPage(int currentPage, int pageSize) {
+		String sql = "select * from student limit ?,?";
+		Object[] params = {(currentPage-1)*pageSize,pageSize};
+		ResultSet rs = DBUtil.executeQuery(sql, params);
+		List<Student> students = new ArrayList<>();
+		try {
+			while (rs.next()) {
+				Student student = new Student(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4));
+				students.add(student);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return students;
+	}
+
+	/*
+	 * @Override public List<Student> queryStudentByPage() {
+	 * 
+	 * DBUtil.executeQuery(sql, params); return null; }
+	 */
 }

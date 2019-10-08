@@ -91,17 +91,10 @@ public class DBUtil {
 
 	//通用的查询,返回结果集
 	public static ResultSet executeQuery(String sql,Object[] params) {
-		Student student = null;
-		List<Student> students = new ArrayList<>();
 		try {
 			
-			//String sql = "SELECT * FROM student";
 			pstmt = createPreparedStatement(sql, params);
 			
-			/*
-			 * if (params!=null) { for (int i = 0; i < params.length; i++) {
-			 * pstmt.setObject(i+1, params[i]); } }
-			 */
 			rs = pstmt.executeQuery();
 			return rs;
 			
@@ -132,5 +125,23 @@ public class DBUtil {
 		} catch (SQLException e) {																																																																											
 			e.printStackTrace();																																																																																																																																																																																																					
 		} 
+	}
+
+	//查询总数
+	public static int getTotalCount(String sql) {
+		int count = -1;
+		try {
+			pstmt = createPreparedStatement(sql, null);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			closeAll(rs, pstmt, connection);
+		}
+		return count;
 	}
 }

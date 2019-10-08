@@ -26,4 +26,10 @@ public interface IStudentDao {
 
 	//查询全部学生
 	public List<Student> queryAllStudents();
+	
+	//查询总数
+	public int getTotalCount();
+	
+	//查询当页学生,当前页，每页显示个数
+	public List<Student> queryStudentByPage(int currentPage,int pageSize);
 }

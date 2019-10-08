@@ -1,3 +1,4 @@
+<%@page import="com.student.entity.PageC"%>
 <%@page import="java.util.List"%>
 <%@page import="com.student.entity.Student"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -38,9 +39,9 @@
 		</tr>
 		
 		<%
-		List<Student> students = (List<Student>)request.getAttribute("students") ;
-		if(students!=null){
-			for(Student student:students){
+		PageC pageC = (PageC)request.getAttribute("pageC") ;
+		if(pageC!=null){
+			for(Student student:pageC.getStudents()){
 	
 		%>
 		<tr>
@@ -55,6 +56,30 @@
 		}
 		%>
 	</table>
-	<a href="add.jsp"></a>
+	<a href="add.jsp">新增</a><br/>
+	<%
+		if(pageC.getCurrentPage()==pageC.getTotalPage()){
+	%>		
+			<a href="QueryStudentByPage?currentPage=1">首页</a>
+			<a href="QueryStudentByPage?currentPage=<%=pageC.getCurrentPage()-1%>">上一页</a>
+	<% 	}
+	
+		else if(pageC.getCurrentPage()==1){
+	%>		<a href="QueryStudentByPage?currentPage=<%=pageC.getCurrentPage()+1%>">下一页</a>
+			<a href="QueryStudentByPage?currentPage=<%=pageC.getTotalPage()%>">尾页</a>
+	<% 	}else{
+	%>
+		<a href="QueryStudentByPage?currentPage=1">首页</a>
+		<a href="QueryStudentByPage?currentPage=<%=pageC.getCurrentPage()-1%>">上一页</a>
+		<a href="QueryStudentByPage?currentPage=<%=pageC.getCurrentPage()+1%>">下一页</a>
+		<a href="QueryStudentByPage?currentPage=<%=pageC.getTotalPage()%>">尾页</a>
+	<%	}
+	%>
+	<select>
+	<option value="QueryStudentByPage?pageSize=5">5</option>
+	<option value="QueryStudentByPage?pageSize=10">10</option>
+	<option value="QueryStudentByPage?pageSize=15">15</option>
+	<option value="QueryStudentByPage?pageSize=20">20</option>
+	</select>
 </body>
 </html>

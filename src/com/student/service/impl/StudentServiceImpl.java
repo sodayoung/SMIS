@@ -52,4 +52,17 @@ public class StudentServiceImpl implements IStudentService{
 			return false;
 		}
 	}
+
+	@Override
+	public List<Student> queryStudentByPage(int currentPage, int pageSize) {
+		
+		return studentDao.queryStudentByPage(currentPage, pageSize);
+	}
+
+	@Override
+	public int getTotalCount( ) {
+		return studentDao.getTotalCount();
+	}
+
+
 }

@@ -16,6 +16,10 @@ public interface IStudentService {
 	//查询全部学生
 	public List<Student> queryAllStudents();
 	
+	public List<Student> queryStudentByPage(int currentPage,int pageSize);
+	
+	public int getTotalCount();
+	
 	//先判断是否存在此学生，再修改
 	public boolean updateStudentByNo(int sno,Student student);
 	
